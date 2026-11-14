@@ -19,10 +19,12 @@ Sway, Waybar and mako structure adapted from [Ruixi-rebirth/sway-dotfiles](https
 1. Update macOS firmware if you still can. The disk is wiped, so back up first.
 2. Write the Arch ISO to a USB stick. Hold Option at boot and pick the EFI drive.
 3. Get a network on the live ISO: USB-C ethernet or phone USB tether. The Broadcom Wi-Fi does not work until after install.
-4. Put this folder on the live ISO (git clone from your own remote, or copy it from a second USB stick), then:
+4. On the live ISO, clone this repo, then run the installer:
 
 ```bash
-TZ_NAME=Europe/Madrid ./install/01-live-iso.sh /dev/sda myhost myuser
+git clone https://github.com/raulmoranguerra/arch-mbp.git
+cd arch-mbp
+TZ_NAME=Europe/Madrid ./install/01-live-iso.sh /dev/sda archbook-pro myuser
 ```
 
 Check the disk name with `lsblk` first (`/dev/sda` is typical on this model, `/dev/nvme0n1` if swapped). Set `TZ_NAME` to your timezone.
