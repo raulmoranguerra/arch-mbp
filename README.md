@@ -19,24 +19,19 @@ Sway, Waybar and mako structure adapted from [Ruixi-rebirth/sway-dotfiles](https
 1. Update macOS firmware if you still can. The disk is wiped, so back up first.
 2. Write the Arch ISO to a USB stick. Hold Option at boot and pick the EFI drive.
 3. Get a network on the live ISO: USB-C ethernet or phone USB tether. The Broadcom Wi-Fi does not work until after install.
-4. On the live ISO, clone this repo, then run the installer:
+4. On the live ISO, run one command. It asks everything up front (erase confirmation, password, optional Wi-Fi, camera driver), then runs unattended:
 
 ```bash
-git clone https://github.com/raulmoranguerra/arch-mbp.git
-cd arch-mbp
-TZ_NAME=Europe/Madrid ./install/01-live-iso.sh /dev/sda archbook-pro myuser
+bash <(curl -fsSL https://raw.githubusercontent.com/raulmoranguerra/arch-mbp/master/install/bootstrap.sh)
 ```
 
-Check the disk name with `lsblk` first (`/dev/sda` is typical on this model, `/dev/nvme0n1` if swapped). Set `TZ_NAME` to your timezone.
+Defaults are host `archbook-pro`, user `rmg`, timezone `Europe/Madrid`. Override with `HOSTNAME_`, `USERNAME_`, `TZ_NAME` before the command. The internal disk is detected automatically (it asks if there is more than one candidate).
 
-5. Reboot, hold Option, pick "Linux Boot Manager", log in on tty1, then:
+5. When it says so, unplug the USB stick. The Mac reboots, a first-boot service installs everything else (about 15 to 30 minutes, log in `/var/log/arch-mbp-firstboot.log`) and reboots once more. Then log in on tty1 and sway starts. If the Mac shows the USB again, hold Option and pick Linux Boot Manager.
 
-```bash
-nmtui                      # connect Wi-Fi
-~/arch-mbp/install/03-post.sh
-```
+Manual path: run `install/01-live-iso.sh DISK HOST USER` yourself, reboot, then run `install/03-post.sh` (add `INSTALL_CAMERA=1` for the camera driver). Without the bootstrap there is no first-boot service.
 
-Add `INSTALL_CAMERA=1` before the command to also build the FaceTime HD camera driver. Log out and back in on tty1 and sway starts.
+During first boot the user has passwordless sudo, removed again when the service succeeds. If it fails (for example no network), check the log, fix it, and reboot to retry.
 
 ## Things to verify on the real machine
 

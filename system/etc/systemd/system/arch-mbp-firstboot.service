@@ -1,0 +1,23 @@
+[Unit]
+Description=arch-mbp first boot setup
+After=network-online.target
+Wants=network-online.target
+ConditionPathExists=/var/lib/arch-mbp-firstboot
+
+[Service]
+Type=oneshot
+User=__USER__
+Environment=HOME=/home/__USER__
+EnvironmentFile=-/var/lib/arch-mbp-firstboot
+WorkingDirectory=/home/__USER__
+ExecStartPre=/bin/bash -c 'for i in $$(seq 1 60); do ping -c1 -W2 archlinux.org >/dev/null 2>&1 && exit 0; sleep 5; done; echo "No network after 5 minutes"; exit 1'
+ExecStart=/bin/bash /home/__USER__/arch-mbp/install/03-post.sh
+ExecStartPost=+/usr/bin/rm -f /etc/sudoers.d/99-firstboot /var/lib/arch-mbp-firstboot
+ExecStartPost=+/usr/bin/systemctl disable arch-mbp-firstboot.service
+ExecStartPost=+/usr/bin/systemctl --no-block reboot
+StandardOutput=append:/var/log/arch-mbp-firstboot.log
+StandardError=append:/var/log/arch-mbp-firstboot.log
+TimeoutStartSec=infinity
+
+[Install]
+WantedBy=multi-user.target

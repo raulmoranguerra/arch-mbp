@@ -48,7 +48,51 @@ sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
 cp -r "$SRC" "/home/$USERNAME_/arch-mbp"
 chown -R "$USERNAME_:$USERNAME_" "/home/$USERNAME_/arch-mbp"
 
-echo "Set the root password:";  passwd
-echo "Set the password for $USERNAME_:"; passwd "$USERNAME_"
+if [ -n "${USER_PASS:-}" ]; then
+  echo "$USERNAME_:$USER_PASS" | chpasswd
+  passwd -l root        # root locked, use sudo
+else
+  echo "Set the root password:";  passwd
+  echo "Set the password for $USERNAME_:"; passwd "$USERNAME_"
+fi
+
+# Optional Wi-Fi profile so first boot can reach the network without ethernet
+if [ -n "${WIFI_SSID:-}" ]; then
+  install -d -m 755 /etc/NetworkManager/system-connections
+  umask 077
+  cat > /etc/NetworkManager/system-connections/firstboot.nmconnection <<EOF
+[connection]
+id=$WIFI_SSID
+uuid=$(cat /proc/sys/kernel/random/uuid)
+type=wifi
+autoconnect=true
+
+[wifi]
+mode=infrastructure
+ssid=$WIFI_SSID
+
+[wifi-security]
+key-mgmt=wpa-psk
+psk=$WIFI_PSK
+
+[ipv4]
+method=auto
+
+[ipv6]
+method=auto
+EOF
+  chmod 600 /etc/NetworkManager/system-connections/firstboot.nmconnection
+  umask 022
+fi
+
+# First-boot automation: run 03-post.sh once after the first boot, then reboot.
+if [ -n "${USER_PASS:-}" ]; then
+  echo "INSTALL_CAMERA=${INSTALL_CAMERA:-0}" > /var/lib/arch-mbp-firstboot
+  echo "$USERNAME_ ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/99-firstboot
+  chmod 440 /etc/sudoers.d/99-firstboot
+  sed "s/__USER__/$USERNAME_/g" "$SRC/system/etc/systemd/system/arch-mbp-firstboot.service" \
+    > /etc/systemd/system/arch-mbp-firstboot.service
+  systemctl enable arch-mbp-firstboot.service NetworkManager-wait-online.service
+fi
 
 systemctl enable NetworkManager fstrim.timer

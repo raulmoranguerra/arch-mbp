@@ -12,11 +12,13 @@ REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 [ -b "$DISK" ] || { echo "$DISK is not a block device"; exit 1; }
 ping -c1 -W3 archlinux.org >/dev/null || { echo "No network. Use ethernet or phone USB tether."; exit 1; }
 
-lsblk "$DISK"
-echo
-echo "This will ERASE EVERYTHING on $DISK."
-read -r -p "Type the disk path again to confirm: " confirm
-[ "$confirm" = "$DISK" ] || { echo "Aborted."; exit 1; }
+if [ "${CONFIRMED:-0}" != "1" ]; then
+  lsblk "$DISK"
+  echo
+  echo "This will ERASE EVERYTHING on $DISK."
+  read -r -p "Type the disk path again to confirm: " confirm
+  [ "$confirm" = "$DISK" ] || { echo "Aborted."; exit 1; }
+fi
 
 case "$DISK" in
   *nvme*|*mmcblk*) P="${DISK}p" ;;
@@ -45,8 +47,13 @@ mkdir -p /mnt/root
 cp -r "$REPO_DIR" /mnt/root/arch-mbp
 arch-chroot /mnt env HOSTNAME_="$HOSTNAME_" USERNAME_="$USERNAME_" \
   TZ_NAME="${TZ_NAME:-UTC}" ROOT_PART="${P}2" \
+  USER_PASS="${USER_PASS:-}" WIFI_SSID="${WIFI_SSID:-}" WIFI_PSK="${WIFI_PSK:-}" \
+  INSTALL_CAMERA="${INSTALL_CAMERA:-0}" \
   /root/arch-mbp/install/02-chroot.sh
 
 echo
-echo "Done. Run: umount -R /mnt && reboot (hold Option and pick 'Linux Boot Manager')."
-echo "After login, run ~/arch-mbp/install/03-post.sh"
+echo "Base install done."
+if [ "${CONFIRMED:-0}" != "1" ]; then
+  echo "Run: umount -R /mnt && reboot (hold Option and pick 'Linux Boot Manager')."
+  echo "Then log in and run ~/arch-mbp/install/03-post.sh (or let the first-boot service do it)."
+fi
