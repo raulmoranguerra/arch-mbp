@@ -8,7 +8,7 @@ export HOSTNAME_="${HOSTNAME_:-archbook-pro}"
 export USERNAME_="${USERNAME_:-rmg}"
 export TZ_NAME="${TZ_NAME:-Europe/Madrid}"
 export INSTALL_CAMERA="${INSTALL_CAMERA:-0}"
-REPO_URL="https://github.com/raulmoranguerra/arch-mbp.git"
+TARBALL_URL="https://github.com/raulmoranguerra/arch-mbp/archive/refs/heads/master.tar.gz"
 
 [ -d /sys/firmware/efi ] || { echo "Not booted in UEFI mode"; exit 1; }
 ping -c1 -W3 archlinux.org >/dev/null || { echo "No network. Plug in ethernet or tether a phone by USB."; exit 1; }
@@ -45,7 +45,11 @@ read -r -p "Build the FaceTime HD camera driver too? [y/N]: " cam
 
 export USER_PASS WIFI_SSID WIFI_PSK INSTALL_CAMERA CONFIRMED=1
 
-[ -d /root/arch-mbp ] || git clone --depth 1 "$REPO_URL" /root/arch-mbp
+# The live ISO has no git, so fetch the repo as a tarball.
+if [ ! -d /root/arch-mbp ]; then
+  mkdir -p /root/arch-mbp
+  curl -fsSL "$TARBALL_URL" | tar -xz --strip-components=1 -C /root/arch-mbp
+fi
 /root/arch-mbp/install/01-live-iso.sh "$DISK" "$HOSTNAME_" "$USERNAME_"
 
 echo
