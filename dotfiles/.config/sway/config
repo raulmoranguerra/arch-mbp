@@ -24,7 +24,7 @@ font pango:JetBrainsMono Nerd Font 10
 # Display: integer scale 2 is crisp and the cheapest to render (1440x900 logical).
 # For more room use 1.5 (1920x1200 logical), at a small GPU cost.
 output eDP-1 scale 2
-# Wallpaper: drawn once by sway, no daemon. Others in ~/.config/wallpapers: castle, pacman, fortress-sunset, glowing-tree, city-dusk, iso-city.
+# Wallpaper: drawn once by sway, no daemon. Others in ~/.config/wallpapers: castle, pacman, fortress-sunset, glowing-tree, city-dusk, iso-city, night-moons, moonlit-bridge, sepia-street, bamboo-moon, castle-hike, neon-diamond.jpg, neon-shibuya.jpg, retro-car.jpg, vaporwave.jpg (the last four are .jpg).
 # For no image at all use: output * bg $bg solid_color
 output * bg ~/.config/wallpapers/ruins.png fill $bg
 

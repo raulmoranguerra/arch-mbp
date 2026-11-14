@@ -46,7 +46,7 @@ Add `INSTALL_CAMERA=1` before the command to also build the FaceTime HD camera d
 
 ## Wallpapers
 
-`dotfiles/.config/wallpapers/` has seven pixel-art wallpapers (`ruins.png` is the default; others: `castle`, `pacman`, `fortress-sunset`, `glowing-tree`, `city-dusk`, `iso-city`) taken from the MIT-licensed [frenzyexists/wallpapers](https://github.com/frenzyexists/wallpapers) collection (licence text alongside). The individual artists are not credited in that repo. To switch, edit the `output * bg` line in the sway config.
+`dotfiles/.config/wallpapers/` has sixteen wallpapers (mostly pixel art) (`ruins.png` is the default; others: `castle`, `pacman`, `fortress-sunset`, `glowing-tree`, `city-dusk`, `iso-city`, `night-moons`, `moonlit-bridge`, `sepia-street`, `bamboo-moon`, `castle-hike`, plus cyberpunk-style `neon-diamond`, `neon-shibuya`, `retro-car`, `vaporwave`) taken from the MIT-licensed [frenzyexists/wallpapers](https://github.com/frenzyexists/wallpapers) collection (licence text alongside). The individual artists are not credited in that repo. To switch, edit the `output * bg` line in the sway config.
 
 ## Keys
 
