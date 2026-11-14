@@ -1,0 +1,173 @@
+# sway config: Gruvbox retro, tuned for efficiency on a 2015 retina MacBook Pro.
+# Structure adapted from Ruixi-rebirth/sway-dotfiles (GPL-3.0).
+
+set $mod Mod4
+set $left h
+set $down j
+set $up k
+set $right l
+set $term foot
+set $menu fuzzel
+
+# Gruvbox
+set $bg     #282828
+set $bg1    #3c3836
+set $bg2    #504945
+set $fg     #ebdbb2
+set $gray   #928374
+set $yellow #fabd2f
+set $red    #fb4934
+set $aqua   #8ec07c
+
+font pango:JetBrainsMono Nerd Font 10
+
+# Display: integer scale 2 is crisp and the cheapest to render (1440x900 logical).
+# For more room use 1.5 (1920x1200 logical), at a small GPU cost.
+output eDP-1 scale 2
+# Wallpaper: drawn once by sway, no daemon. Others in ~/.config/wallpapers: castle, pacman, fortress-sunset, glowing-tree, city-dusk, iso-city.
+# For no image at all use: output * bg $bg solid_color
+output * bg ~/.config/wallpapers/ruins.png fill $bg
+
+# Look: boxy, thick borders, no effects
+default_border pixel 2
+default_floating_border pixel 2
+hide_edge_borders smart
+smart_gaps on
+gaps inner 4
+focus_follows_mouse no
+
+client.focused          $yellow $bg1 $fg   $aqua $yellow
+client.focused_inactive $bg2    $bg  $gray $bg2  $bg2
+client.unfocused        $bg1    $bg  $gray $bg1  $bg1
+client.urgent           $red    $red $bg   $red  $red
+client.background       $bg
+
+# Input
+input type:keyboard {
+    xkb_layout us
+    xkb_options caps:escape
+    repeat_delay 300
+    repeat_rate 40
+}
+input type:touchpad {
+    tap enabled
+    natural_scroll enabled
+    dwt enabled
+    click_method clickfinger
+    middle_emulation enabled
+    accel_profile adaptive
+    pointer_accel 0.3
+}
+
+# Autostart (single start, no exec_always respawns)
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP SWAYSOCK
+exec mako
+exec waybar
+exec gsettings set org.gnome.desktop.interface gtk-theme 'gruvbox-dark'
+exec gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
+exec gsettings set org.gnome.desktop.interface font-name 'JetBrainsMono Nerd Font 10'
+exec gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+
+# Idle: lock 5 min, screen off 5.5 min, suspend 15 min
+exec swayidle -w \
+    timeout 300 'swaylock -f' \
+    timeout 330 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
+    timeout 900 'systemctl suspend' \
+    before-sleep 'swaylock -f'
+
+# Core bindings
+bindsym $mod+Return exec $term
+bindsym $mod+d exec $menu
+bindsym $mod+Shift+q kill
+bindsym $mod+Shift+c reload
+bindsym $mod+Escape exec swaylock -f
+bindsym $mod+Shift+e exec ~/.local/bin/powermenu
+bindsym $mod+b exec firefox
+floating_modifier $mod normal
+
+# Focus and move
+bindsym $mod+$left  focus left
+bindsym $mod+$down  focus down
+bindsym $mod+$up    focus up
+bindsym $mod+$right focus right
+bindsym $mod+Left   focus left
+bindsym $mod+Down   focus down
+bindsym $mod+Up     focus up
+bindsym $mod+Right  focus right
+bindsym $mod+Shift+$left  move left
+bindsym $mod+Shift+$down  move down
+bindsym $mod+Shift+$up    move up
+bindsym $mod+Shift+$right move right
+bindsym $mod+Shift+Left   move left
+bindsym $mod+Shift+Down   move down
+bindsym $mod+Shift+Up     move up
+bindsym $mod+Shift+Right  move right
+
+# Workspaces
+bindsym $mod+1 workspace number 1
+bindsym $mod+2 workspace number 2
+bindsym $mod+3 workspace number 3
+bindsym $mod+4 workspace number 4
+bindsym $mod+5 workspace number 5
+bindsym $mod+6 workspace number 6
+bindsym $mod+7 workspace number 7
+bindsym $mod+8 workspace number 8
+bindsym $mod+9 workspace number 9
+bindsym $mod+Shift+1 move container to workspace number 1
+bindsym $mod+Shift+2 move container to workspace number 2
+bindsym $mod+Shift+3 move container to workspace number 3
+bindsym $mod+Shift+4 move container to workspace number 4
+bindsym $mod+Shift+5 move container to workspace number 5
+bindsym $mod+Shift+6 move container to workspace number 6
+bindsym $mod+Shift+7 move container to workspace number 7
+bindsym $mod+Shift+8 move container to workspace number 8
+bindsym $mod+Shift+9 move container to workspace number 9
+bindsym $mod+slash workspace back_and_forth
+bindsym $mod+period workspace next
+bindsym $mod+comma  workspace prev
+
+# Layout
+bindsym $mod+semicolon  splitv
+bindsym $mod+apostrophe splith
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+bindsym $mod+f fullscreen
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+bindsym $mod+p focus parent
+bindsym $mod+minus move scratchpad
+bindsym $mod+equal scratchpad show
+bindsym $mod+g gaps inner all set 0
+bindsym $mod+Shift+g gaps inner all set 4
+
+mode "resize" {
+    bindsym $left  resize shrink width 10px
+    bindsym $down  resize grow height 10px
+    bindsym $up    resize shrink height 10px
+    bindsym $right resize grow width 10px
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+# Media, brightness (Apple keyboard keys), screenshots
+bindsym XF86AudioRaiseVolume  exec wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+
+bindsym XF86AudioLowerVolume  exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+bindsym XF86AudioMute         exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+bindsym XF86AudioMicMute      exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+bindsym XF86MonBrightnessUp   exec brightnessctl set 5%+
+bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
+bindsym XF86KbdBrightnessUp   exec brightnessctl -d 'smc::kbd_backlight' set 10%+
+bindsym XF86KbdBrightnessDown exec brightnessctl -d 'smc::kbd_backlight' set 10%-
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+bindsym Print exec grim -g "$(slurp)" - | wl-copy
+bindsym $mod+Print exec grim -g "$(slurp)" ~/Pictures/shot-$(date +%Y%m%d-%H%M%S).png
+
+# Window rules
+for_window [app_id="pavucontrol"] floating enable
+for_window [app_id="mpv"] floating enable, resize set 960 540
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="dialog"] floating enable
