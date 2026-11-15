@@ -31,6 +31,8 @@ Defaults are host `archbook-pro`, user `rmg`, timezone `Europe/Madrid`, Spanish 
 
 5. When it says so, unplug the USB stick. The Mac reboots, a first-boot service installs everything else (about 15 to 30 minutes, log in `/var/log/arch-mbp-firstboot.log`) and reboots once more. Then log in on tty1 and sway starts. If the Mac shows the USB again, hold Option and pick Linux Boot Manager.
 
+SSH is on after first boot (key-only, no passwords): `ssh rmg@archbook-pro.local`. The authorised key is in `system/ssh/authorized_keys`.
+
 Manual path: run `install/01-live-iso.sh DISK HOST USER` yourself, reboot, then run `install/03-post.sh` (add `INSTALL_CAMERA=1` for the camera driver). Without the bootstrap there is no first-boot service.
 
 During first boot the user has passwordless sudo, removed again when the service succeeds. If it fails (for example no network), check the log, fix it, and reboot to retry.

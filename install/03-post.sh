@@ -24,6 +24,7 @@ PKGS=(
   mesa libva-intel-driver libva-utils
   ttf-jetbrains-mono-nerd noto-fonts noto-fonts-emoji papirus-icon-theme
   tlp thermald zram-generator earlyoom greetd greetd-tuigreet
+  openssh avahi nss-mdns
   stow starship fastfetch btop neovim bash-completion man-db firefox mpv
 )
 sudo pacman -Syu --needed --noconfirm "${PKGS[@]}"
@@ -49,9 +50,14 @@ sudo install -Dm644 "$REPO/system/etc/sysctl.d/99-zram.conf"                  /e
 sudo install -Dm644 "$REPO/system/etc/systemd/journald.conf.d/size.conf"      /etc/systemd/journald.conf.d/size.conf
 sudo install -Dm755 "$REPO/system/usr/local/bin/sway-session"                 /usr/local/bin/sway-session
 sudo install -Dm644 "$REPO/system/etc/greetd/config.toml"                     /etc/greetd/config.toml
+sudo install -Dm644 "$REPO/system/etc/ssh-hardening.conf"                     /etc/ssh/sshd_config.d/10-hardening.conf
+install -Dm600 "$REPO/system/ssh/authorized_keys" "$HOME/.ssh/authorized_keys"
+chmod 700 "$HOME/.ssh"
+grep -q mdns_minimal /etc/nsswitch.conf || sudo sed -i 's/ resolve / mdns_minimal [NOTFOUND=return] resolve /' /etc/nsswitch.conf
 sudo systemctl daemon-reload
 sudo systemctl mask systemd-rfkill.service systemd-rfkill.socket
 sudo systemctl enable tlp thermald earlyoom
+sudo systemctl enable sshd avahi-daemon
 sudo systemctl enable greetd   # TUI login (tuigreet) on tty1, replaces getty@tty1
 # Start without waiting: one of these can block for a long time, and they all start on the next boot anyway.
 for s in tlp thermald earlyoom; do sudo systemctl start --no-block "$s" || true; done
