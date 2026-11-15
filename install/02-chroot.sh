@@ -40,7 +40,7 @@ title   Arch Linux
 linux   /vmlinuz-linux
 initrd  /intel-ucode.img
 initrd  /initramfs-linux.img
-options root=PARTUUID=$PARTUUID rw quiet nowatchdog i915.enable_fbc=1
+options root=PARTUUID=$PARTUUID rw quiet nowatchdog
 EOF
 
 useradd -m -G wheel -s /bin/bash "$USERNAME_"
