@@ -144,8 +144,13 @@ local bars_file = io.open(bars_lib)
 if bars_file then
 	bars_file:close()
 	local t = bar_theme or { bar = "rgb(0a0a0a)", text = "rgb(ffffff)", close = "rgb(ffffff)", min = "rgb(8a8a8a)", icon = "rgb(0a0a0a)" }
+	-- Never load the plugin while the config is being read: a plugin load re-reads the config, and
+	-- loading it again from here loops until Hyprland crashes. It is loaded once from the autostart
+	-- below; that re-read then finds the plugin and applies the settings.
 	if not hl.plugin.hyprbars then
-		pcall(hl.plugin.load, bars_lib)
+		hl.on("hyprland.start", function()
+			hl.exec_cmd("hyprctl plugin load " .. bars_lib)
+		end)
 	end
 	if hl.plugin.hyprbars then
 		hl.config({
