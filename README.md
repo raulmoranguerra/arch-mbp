@@ -47,7 +47,7 @@ During first boot the user has passwordless sudo, removed again when the service
 
 ## Wallpapers
 
-`stow/theme-catppuccin/.config/wallpapers/` has sixteen wallpapers (mostly pixel art) (`ruins.png` is the default; others: `castle`, `pacman`, `fortress-sunset`, `glowing-tree`, `city-dusk`, `iso-city`, `night-moons`, `moonlit-bridge`, `sepia-street`, `bamboo-moon`, `castle-hike`, plus cyberpunk-style `neon-diamond`, `neon-shibuya`, `retro-car`, `vaporwave`) taken from the MIT-licensed [frenzyexists/wallpapers](https://github.com/frenzyexists/wallpapers) collection (licence text alongside). The individual artists are not credited in that repo. To switch, edit the `path` line in `~/.config/hypr/hyprpaper.conf`.
+`stow/theme-catppuccin/.config/wallpapers/` has sixteen wallpapers (mostly pixel art) (`ctp-evening-sky.jpg` is the default, from the MIT-licensed Catppuccin wallpaper set (`ctp-*.jpg`, licence alongside); the pixel art is `ruins.png` and friends; others: `castle`, `pacman`, `fortress-sunset`, `glowing-tree`, `city-dusk`, `iso-city`, `night-moons`, `moonlit-bridge`, `sepia-street`, `bamboo-moon`, `castle-hike`, plus cyberpunk-style `neon-diamond`, `neon-shibuya`, `retro-car`, `vaporwave`) taken from the MIT-licensed [frenzyexists/wallpapers](https://github.com/frenzyexists/wallpapers) collection (licence text alongside). The individual artists are not credited in that repo. To switch, edit the `path` line in `~/.config/hypr/hyprpaper.conf`.
 
 The black and white theme (`stow/theme-mono/`) has six monochrome wallpapers from the same collection: `moon` (default), `stars-rocket`, `shuttle`, `night-station`, `storm-rail`, `mountain`.
 
