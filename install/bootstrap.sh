@@ -12,6 +12,7 @@ esac
 export HOSTNAME_="${HOSTNAME_:-$D_HOST}"
 export THEME="${THEME:-$D_THEME}"
 export USERNAME_="${USERNAME_:-rmg}"
+export KB_LAYOUT="${KB_LAYOUT:-es}"   # Spanish keyboard; override with KB_LAYOUT=us
 export TZ_NAME="${TZ_NAME:-Europe/Madrid}"
 export INSTALL_CAMERA="${INSTALL_CAMERA:-0}"
 TARBALL_URL="https://github.com/raulmoranguerra/arch-mbp/archive/refs/heads/master.tar.gz"
@@ -33,7 +34,7 @@ fi
 echo
 lsblk -po NAME,SIZE,MODEL,FSTYPE "$DISK"
 echo
-echo "Model: $PRODUCT   Host: $HOSTNAME_   User: $USERNAME_   Theme: $THEME   Timezone: $TZ_NAME   Disk: $DISK"
+echo "Model: $PRODUCT   Host: $HOSTNAME_   User: $USERNAME_   Theme: $THEME   Keyboard: $KB_LAYOUT   Timezone: $TZ_NAME   Disk: $DISK"
 read -r -p "Type 'erase' to wipe $DISK and install: " ok
 [ "$ok" = "erase" ] || { echo "Aborted."; exit 1; }
 

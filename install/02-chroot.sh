@@ -10,7 +10,7 @@ hwclock --systohc
 sed -i 's/^#en_US.UTF-8/en_US.UTF-8/' /etc/locale.gen
 locale-gen
 echo "LANG=en_US.UTF-8" > /etc/locale.conf
-echo "KEYMAP=us" > /etc/vconsole.conf
+echo "KEYMAP=${KB_LAYOUT:-us}" > /etc/vconsole.conf
 echo "$HOSTNAME_" > /etc/hostname
 
 # Wi-Fi: BCM4360 (14e4:43a0) needs the wl driver. Others use in-kernel brcmfmac.

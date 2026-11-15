@@ -27,7 +27,7 @@ Sway, Waybar and mako structure adapted from [Ruixi-rebirth/sway-dotfiles](https
 bash <(curl -fsSL https://raw.githubusercontent.com/raulmoranguerra/arch-mbp/master/install/bootstrap.sh)
 ```
 
-Defaults are host `archbook-pro`, user `rmg`, timezone `Europe/Madrid`. Override with `HOSTNAME_`, `USERNAME_`, `TZ_NAME` before the command. The internal disk is detected automatically (it asks if there is more than one candidate).
+Defaults are host `archbook-pro`, user `rmg`, timezone `Europe/Madrid`, Spanish keyboard (`es`). Override with `HOSTNAME_`, `USERNAME_`, `TZ_NAME`, `KB_LAYOUT` (for example `us`) before the command. With the Spanish layout on an Apple keyboard, `~` is right Option + 4 and `|` is right Option + 1. The internal disk is detected automatically (it asks if there is more than one candidate).
 
 5. When it says so, unplug the USB stick. The Mac reboots, a first-boot service installs everything else (about 15 to 30 minutes, log in `/var/log/arch-mbp-firstboot.log`) and reboots once more. Then log in on tty1 and sway starts. If the Mac shows the USB again, hold Option and pick Linux Boot Manager.
 

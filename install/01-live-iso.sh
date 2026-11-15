@@ -38,7 +38,7 @@ mkdir -p /mnt/boot
 mount "${P}1" /mnt/boot
 
 pacstrap -K /mnt base linux linux-headers linux-firmware intel-ucode \
-  networkmanager sudo base-devel git vim pciutils dkms broadcom-wl-dkms
+  networkmanager sudo base-devel git vim pciutils dkms broadcom-wl-dkms kbd
 
 genfstab -U /mnt > /mnt/etc/fstab
 sed -i 's/relatime/noatime/' /mnt/etc/fstab
@@ -48,7 +48,7 @@ cp -r "$REPO_DIR" /mnt/root/arch-mbp
 arch-chroot /mnt env HOSTNAME_="$HOSTNAME_" USERNAME_="$USERNAME_" \
   TZ_NAME="${TZ_NAME:-UTC}" ROOT_PART="${P}2" \
   USER_PASS="${USER_PASS:-}" WIFI_SSID="${WIFI_SSID:-}" WIFI_PSK="${WIFI_PSK:-}" \
-  INSTALL_CAMERA="${INSTALL_CAMERA:-0}" THEME="${THEME:-}" \
+  INSTALL_CAMERA="${INSTALL_CAMERA:-0}" THEME="${THEME:-}" KB_LAYOUT="${KB_LAYOUT:-us}" \
   /root/arch-mbp/install/02-chroot.sh
 
 echo
