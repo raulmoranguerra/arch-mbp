@@ -23,7 +23,7 @@ PKGS=(
   pipewire pipewire-pulse pipewire-alsa wireplumber
   xdg-desktop-portal-wlr xdg-desktop-portal-gtk polkit xorg-xwayland
   mesa libva-intel-driver libva-utils
-  ttf-iosevka-nerd inter-font ttf-jetbrains-mono-nerd noto-fonts noto-fonts-emoji adwaita-icon-theme
+  ttf-iosevka-nerd inter-font ttf-jetbrains-mono-nerd noto-fonts noto-fonts-emoji adwaita-icon-theme tela-circle-icon-theme-black
   tlp thermald zram-generator earlyoom greetd greetd-tuigreet
   openssh avahi nss-mdns
   stow starship fastfetch btop neovim bash-completion man-db firefox mpv
