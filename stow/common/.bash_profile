@@ -1,6 +1,6 @@
 [ -f ~/.bashrc ] && . ~/.bashrc
 
-# No display manager: log in on tty1 and sway starts directly.
+# Fallback only: greetd/tuigreet normally starts sway. Other TTYs stay plain shells.
 if [ -z "${WAYLAND_DISPLAY:-}" ] && [ "$(tty)" = "/dev/tty1" ]; then
   export XDG_CURRENT_DESKTOP=sway
   export XDG_SESSION_TYPE=wayland

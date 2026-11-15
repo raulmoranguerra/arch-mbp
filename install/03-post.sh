@@ -23,7 +23,7 @@ PKGS=(
   xdg-desktop-portal-wlr xdg-desktop-portal-gtk polkit xorg-xwayland
   mesa libva-intel-driver libva-utils
   ttf-jetbrains-mono-nerd noto-fonts noto-fonts-emoji papirus-icon-theme
-  tlp thermald zram-generator earlyoom
+  tlp thermald zram-generator earlyoom greetd greetd-tuigreet
   stow starship fastfetch btop neovim bash-completion man-db firefox mpv
 )
 sudo pacman -Syu --needed --noconfirm "${PKGS[@]}"
@@ -47,9 +47,12 @@ sudo install -Dm644 "$REPO/system/etc/tlp.d/10-mbp.conf"                      /e
 sudo install -Dm644 "$REPO/system/etc/systemd/zram-generator.conf"            /etc/systemd/zram-generator.conf
 sudo install -Dm644 "$REPO/system/etc/sysctl.d/99-zram.conf"                  /etc/sysctl.d/99-zram.conf
 sudo install -Dm644 "$REPO/system/etc/systemd/journald.conf.d/size.conf"      /etc/systemd/journald.conf.d/size.conf
+sudo install -Dm755 "$REPO/system/usr/local/bin/sway-session"                 /usr/local/bin/sway-session
+sudo install -Dm644 "$REPO/system/etc/greetd/config.toml"                     /etc/greetd/config.toml
 sudo systemctl daemon-reload
 sudo systemctl mask systemd-rfkill.service systemd-rfkill.socket
 sudo systemctl enable tlp thermald earlyoom
+sudo systemctl enable greetd   # TUI login (tuigreet) on tty1, replaces getty@tty1
 # Start without waiting: one of these can block for a long time, and they all start on the next boot anyway.
 for s in tlp thermald earlyoom; do sudo systemctl start --no-block "$s" || true; done
 sudo systemctl enable mbpfan 2>/dev/null || sudo systemctl enable mbpfan.service || true
@@ -72,5 +75,5 @@ stow --no-folding -d "$REPO/stow" -t "$HOME" common "theme-$THEME"
 chmod +x "$HOME/.local/bin/powermenu" || true
 
 echo
-echo "Done. Log out and back in on tty1 to start sway."
+echo "Done. Reboot: a text login (tuigreet) appears on tty1 and starts sway."
 echo "Check power: sudo tlp-stat -s ; sudo powertop (optional) ; systemd-analyze"
