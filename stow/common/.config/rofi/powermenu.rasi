@@ -1,0 +1,11 @@
+@import "colors.rasi"
+configuration { show-icons: false; }
+* { font: "Iosevka Nerd Font 10"; }
+window { transparency: "real"; location: center; width: 300px; padding: 4px; border-radius: 6px; background-color: @background; }
+mainbox { spacing: 2px; margin: 4px; padding: 2px; background-color: @background; children: [ "message", "listview" ]; }
+message { margin: 2px; padding: 8px; border-radius: 4px; background-color: @background-alt; text-color: @foreground; }
+textbox { background-color: transparent; text-color: @foreground; }
+listview { columns: 1; lines: 5; cycle: true; dynamic: true; scrollbar: false; spacing: 4px; padding: 4px; background-color: @background; }
+element { padding: 10px; border-radius: 4px; background-color: @background; text-color: @foreground; }
+element selected.normal { background-color: @selected; text-color: @on-accent; }
+element-text { background-color: transparent; text-color: inherit; }

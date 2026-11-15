@@ -7,7 +7,7 @@ set -euo pipefail
 PRODUCT="$(cat /sys/class/dmi/id/product_name 2>/dev/null || echo unknown)"
 case "$PRODUCT" in
   MacBookAir*) D_HOST=archbook-air; D_THEME=mono ;;
-  *)           D_HOST=archbook-pro; D_THEME=gruvbox ;;
+  *)           D_HOST=archbook-pro; D_THEME=catppuccin ;;
 esac
 export HOSTNAME_="${HOSTNAME_:-$D_HOST}"
 export THEME="${THEME:-$D_THEME}"

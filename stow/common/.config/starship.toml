@@ -1,0 +1,40 @@
+format = """
+$username\
+[@](fg:#94e2d5)$hostname\
+$directory\
+$git_branch\
+$git_status\
+$time\
+$character\
+"""
+right_format = """
+$cmd_duration\
+$python\
+$nodejs\
+$battery\
+"""
+[username]
+show_always = true
+format = "[$user]($style)"
+style_user = "bold #a6e3a1"
+[hostname]
+ssh_only = false
+format = "[$hostname]($style) "
+style = "bold #a6e3a1"
+[directory]
+style = "#89b4fa"
+truncation_length = 2
+[time]
+disabled = false
+format = " [$time]($style) "
+style = "#6c7086"
+time_format = "%H:%M"
+[character]
+success_symbol = "[~>>](#89b4fa)"
+error_symbol = "[~>>](#f38ba8)"
+[git_branch]
+format = "[$branch]($style) "
+style = "#f5c2e7"
+[cmd_duration]
+format = "[$duration]($style) "
+style = "#f9e2af"

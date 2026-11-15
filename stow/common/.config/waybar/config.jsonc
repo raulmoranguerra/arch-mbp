@@ -1,61 +1,84 @@
 {
+  "reload_style_on_change": true,
   "layer": "top",
   "position": "top",
-  "height": 26,
   "spacing": 0,
-  "modules-left": ["hyprland/workspaces", "hyprland/submap"],
+  "height": 30,
+  "modules-left": ["hyprland/workspaces", "custom/sep", "cpu", "custom/sep", "memory", "custom/sep", "network#speed"],
   "modules-center": ["clock"],
-  "modules-right": ["pulseaudio", "backlight", "cpu", "memory", "temperature", "network", "battery"],
+  "modules-right": ["hyprland/submap", "temperature", "custom/sep", "backlight", "custom/sep", "wireplumber", "custom/sep", "network", "battery"],
 
   "hyprland/workspaces": {
-    "disable-scroll": true,
-    "format": "{name}"
+    "on-click": "activate",
+    "format": "{id}",
+    "persistent-workspaces": { "*": 4 },
+    "on-scroll-up": "hyprctl dispatch workspace e-1",
+    "on-scroll-down": "hyprctl dispatch workspace e+1"
   },
-  "clock": {
-    "interval": 30,
-    "format": "{:%a %d %b  %H:%M}",
-    "tooltip-format": "<tt>{calendar}</tt>"
-  },
-  "pulseaudio": {
-    "format": "VOL {volume}%",
-    "format-muted": "VOL MUTE",
-    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
-    "tooltip": false
-  },
-  "backlight": {
-    "format": "LCD {percent}%",
-    "tooltip": false
-  },
+  "hyprland/submap": { "format": "{}", "tooltip": false },
+  "custom/sep": { "format": "|", "tooltip": false },
   "cpu": {
-    "interval": 5,
-    "format": "CPU {usage}%",
-    "tooltip": false
+    "interval": 2,
+    "format": "<span color='#89b4fa'></span>  {usage}%",
+    "on-click": "kitty -e btop"
   },
   "memory": {
-    "interval": 10,
-    "format": "MEM {percentage}%",
-    "tooltip": false
+    "interval": 5,
+    "format": "<span color='#89b4fa'></span>  {percentage}%",
+    "tooltip-format": "{used}/{total} GiB",
+    "on-click": "kitty -e btop"
+  },
+  "network#speed": {
+    "interval": 2,
+    "format-wifi": "<span color='#a6e3a1'></span> {bandwidthDownBytes} <span color='#f38ba8'></span> {bandwidthUpBytes}",
+    "format-ethernet": "<span color='#a6e3a1'></span> {bandwidthDownBytes} <span color='#f38ba8'></span> {bandwidthUpBytes}",
+    "format-disconnected": "󰌍",
+    "tooltip-format": "{ifname} {ipaddr}",
+    "min-length": 20
+  },
+  "clock": {
+    "format": "{:%H:%M / %b %d}",
+    "tooltip-format": "<tt>{calendar}</tt>"
   },
   "temperature": {
     "hwmon-path-abs": "/sys/devices/platform/coretemp.0/hwmon",
     "input-filename": "temp1_input",
     "critical-threshold": 85,
-    "format": "{temperatureC}C",
+    "format": "<span color='#eba0ac'></span> {temperatureC}°C",
     "tooltip": false
+  },
+  "backlight": {
+    "scroll-step": 5,
+    "format": "{icon}",
+    "format-icons": ["󰍞", "󰍟", "󰍝", "󰍠"],
+    "tooltip-format": "{percent}%"
+  },
+  "wireplumber": {
+    "scroll-step": 5,
+    "format": "{icon}",
+    "format-muted": "",
+    "format-icons": ["", "", ""],
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "tooltip-format": "{volume}% | {node_name}"
   },
   "network": {
-    "interval": 10,
-    "format-wifi": "{essid} {signalStrength}%",
-    "format-ethernet": "ETH {ipaddr}",
-    "format-disconnected": "NO NET",
-    "tooltip": false
+    "interval": 5,
+    "format-wifi": "{icon}",
+    "format-ethernet": "󰈀",
+    "format-disconnected": "󰪮",
+    "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
+    "tooltip-format-wifi": "{essid} {signalStrength}%",
+    "tooltip-format-ethernet": "{ifname} {ipaddr}",
+    "on-click-right": "kitty -e nmtui"
   },
   "battery": {
-    "interval": 30,
-    "states": { "warning": 25, "critical": 12 },
-    "format": "BAT {capacity}%",
-    "format-charging": "CHG {capacity}%",
-    "format-full": "FULL",
-    "tooltip": false
+    "interval": 10,
+    "format": "{icon} {capacity}%",
+    "format-charging": "󰂄 {capacity}%",
+    "format-full": "󰁹 {capacity}%",
+    "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+    "tooltip-format-discharging": "{power:>1.0f}W↓ {capacity}%",
+    "tooltip-format-charging": "{power:>1.0f}W↑ {capacity}%",
+    "states": { "warning": 30, "critical": 15 }
   }
 }

@@ -1,8 +1,8 @@
 # arch-mbp
 
-Arch Linux on a 2015 15" retina MacBook Pro (MacBookPro11,x): Hyprland, retro Gruvbox, tuned for efficiency.
+Arch Linux on a 2015 15" retina MacBook Pro (MacBookPro11,x): Hyprland with a Catppuccin look, tuned for efficiency.
 
-Original sway, Waybar and mako structure adapted from [Ruixi-rebirth/sway-dotfiles](https://github.com/Ruixi-rebirth/sway-dotfiles) (GPL-3.0, so this repo is GPL-3.0 too). A local clone of the original sits in `upstream/` for reference. It is git-ignored and never installed.
+The look and Waybar/rofi/kitty/dunst styling are adapted from [ad1822/hyprdots](https://github.com/ad1822/hyprdots) (MIT, licence in `LICENSE-hyprdots`). The first iteration was based on [Ruixi-rebirth/sway-dotfiles](https://github.com/Ruixi-rebirth/sway-dotfiles) (GPL-3.0, so this repo is GPL-3.0 too).
 
 ## Layout
 
@@ -11,8 +11,8 @@ Original sway, Waybar and mako structure adapted from [Ruixi-rebirth/sway-dotfil
 | `install/01-live-iso.sh` | From the live ISO: partition, format, pacstrap, then run step 2 |
 | `install/02-chroot.sh` | Inside the chroot: locale, user, systemd-boot, Wi-Fi driver choice |
 | `install/03-post.sh` | After first boot: packages, AUR, services, power tuning, stow dotfiles |
-| `stow/common/` | Shared stow package: Hyprland keybinds, Waybar layout, bash, power menu |
-| `stow/theme-gruvbox/` | Retro Gruvbox look (default for the 2015 Pro) with pixel-art wallpapers |
+| `stow/common/` | Shared stow package: Hyprland config (Lua), Waybar, kitty, rofi, dunst, fish, starship |
+| `stow/theme-catppuccin/` | Catppuccin Mocha look (default for the 2015 Pro) with pixel-art wallpapers |
 | `stow/theme-mono/` | Black and white look (default for the 2017 Air) with monochrome wallpapers |
 | `system/etc/` | tlp, zram, sysctl, journald, modprobe settings |
 
@@ -39,7 +39,7 @@ During first boot the user has passwordless sudo, removed again when the service
 
 ## Things to verify on the real machine
 
-- AUR package names (`mbpfan-git`, `gruvbox-gtk-theme-git`) and the GTK theme name set in `hypr/theme.conf` can drift. If the theme does not apply, run `gsettings get org.gnome.desktop.interface gtk-theme` after picking one with `nwg-look` or check `ls /usr/share/themes`.
+- The AUR package name `mbpfan-git` can drift. The Hyprland config is Lua for Hyprland 0.57, so some option names may need adjusting on the real machine (check `hyprctl configerrors`).
 - Wi-Fi: the script picks `broadcom-wl-dkms` only if the chip is a BCM4360 (`14e4:43a0`), otherwise the in-kernel `brcmfmac`.
 - 11,5 models with the AMD GPU: check it powers down with `sudo powertop` or `cat /sys/kernel/debug/vgaswitcheroo/switch`.
 - Waybar CPU temperature path assumes `coretemp` (Intel). Check `ls /sys/devices/platform/coretemp.0/hwmon`.
@@ -47,19 +47,19 @@ During first boot the user has passwordless sudo, removed again when the service
 
 ## Wallpapers
 
-`stow/theme-gruvbox/.config/wallpapers/` has sixteen wallpapers (mostly pixel art) (`ruins.png` is the default; others: `castle`, `pacman`, `fortress-sunset`, `glowing-tree`, `city-dusk`, `iso-city`, `night-moons`, `moonlit-bridge`, `sepia-street`, `bamboo-moon`, `castle-hike`, plus cyberpunk-style `neon-diamond`, `neon-shibuya`, `retro-car`, `vaporwave`) taken from the MIT-licensed [frenzyexists/wallpapers](https://github.com/frenzyexists/wallpapers) collection (licence text alongside). The individual artists are not credited in that repo. To switch, edit the `path` line in `~/.config/hypr/hyprpaper.conf`.
+`stow/theme-catppuccin/.config/wallpapers/` has sixteen wallpapers (mostly pixel art) (`ruins.png` is the default; others: `castle`, `pacman`, `fortress-sunset`, `glowing-tree`, `city-dusk`, `iso-city`, `night-moons`, `moonlit-bridge`, `sepia-street`, `bamboo-moon`, `castle-hike`, plus cyberpunk-style `neon-diamond`, `neon-shibuya`, `retro-car`, `vaporwave`) taken from the MIT-licensed [frenzyexists/wallpapers](https://github.com/frenzyexists/wallpapers) collection (licence text alongside). The individual artists are not credited in that repo. To switch, edit the `path` line in `~/.config/hypr/hyprpaper.conf`.
 
 The black and white theme (`stow/theme-mono/`) has six monochrome wallpapers from the same collection: `moon` (default), `stars-rocket`, `shuttle`, `night-station`, `storm-rail`, `mountain`.
 
 ## Machines and themes
 
-The installer reads the Mac model from DMI and picks defaults: `MacBookAir*` gets host `archbook-air`, theme `mono`, scale 1 (1440x900, not Retina). Anything else (the 2015 Pro) gets host `archbook-pro`, theme `gruvbox`, scale 2. Override with `HOSTNAME_`, `THEME` (`gruvbox` or `mono`) and `SCALE` before the command. The scale lives in a generated `~/.config/sway/host.conf`, the look in the stowed `~/.config/hypr/hyprpaper.conf`.
+The installer reads the Mac model from DMI and picks defaults: `MacBookAir*` gets host `archbook-air`, theme `mono`, scale 1 (1440x900, not Retina). Anything else (the 2015 Pro) gets host `archbook-pro`, theme `catppuccin`, scale 2. Override with `HOSTNAME_`, `THEME` (`catppuccin` or `mono`) and `SCALE` before the command. The scale lives in a generated `~/.config/hypr/host.lua`, the look in the stowed `~/.config/hypr/theme.lua`.
 
 To add a theme, copy a `stow/theme-*` folder, change the colours, and set `THEME=yourname`.
 
 ## Keys
 
-Mod is the Option (Alt) key. Command and Control are swapped, so Cmd+C/V/T/W work like macOS in apps (Cmd+Shift+C/V in the terminal). `Option+Return` terminal, `Option+d` launcher, `Option+Shift+q` close, `Option+Escape` lock, `Option+Shift+e` power menu, `Option+1..9` workspaces, `Option+r` resize mode. Full list in `stow/common/.config/hypr/hyprland.conf`.
+Mod is the Option (Alt) key. Command and Control are swapped, so Cmd+C/V/T/W work like macOS in apps (Cmd+Shift+C/V in the terminal). `Option+Return` terminal (kitty), `Option+d` launcher (rofi), `Option+Shift+q` close, `Option+Escape` lock, `Option+Shift+e` power menu, `Option+1..9` workspaces, `Option+=`/`Option+-` resize column, `Option+Tab` previous workspace. Full list in `stow/common/.config/hypr/hyprland.lua`.
 
 ## Efficiency choices
 
