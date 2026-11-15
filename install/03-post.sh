@@ -9,7 +9,7 @@ REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 PRODUCT="$(cat /sys/class/dmi/id/product_name 2>/dev/null || echo unknown)"
 case "$PRODUCT" in
   MacBookAir*) DEFAULT_THEME=mono;    DEFAULT_SCALE=1 ;;
-  *)           DEFAULT_THEME=catppuccin; DEFAULT_SCALE=2 ;;
+  *)           DEFAULT_THEME=mono;    DEFAULT_SCALE=2 ;;
 esac
 THEME="${THEME:-$DEFAULT_THEME}"
 SCALE="${SCALE:-$DEFAULT_SCALE}"
@@ -23,7 +23,7 @@ PKGS=(
   pipewire pipewire-pulse pipewire-alsa wireplumber
   xdg-desktop-portal-wlr xdg-desktop-portal-gtk polkit xorg-xwayland
   mesa libva-intel-driver libva-utils
-  ttf-iosevka-nerd inter-font ttf-jetbrains-mono-nerd noto-fonts noto-fonts-emoji papirus-icon-theme
+  ttf-iosevka-nerd inter-font ttf-jetbrains-mono-nerd noto-fonts noto-fonts-emoji adwaita-icon-theme
   tlp thermald zram-generator earlyoom greetd greetd-tuigreet
   openssh avahi nss-mdns
   stow starship fastfetch btop neovim bash-completion man-db firefox mpv

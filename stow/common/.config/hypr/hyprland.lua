@@ -57,7 +57,7 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("hypridle")
 	hl.exec_cmd("gsettings set org.gnome.desktop.interface color-scheme prefer-dark")
 	hl.exec_cmd("gsettings set org.gnome.desktop.interface gtk-theme Adwaita-dark")
-	hl.exec_cmd("gsettings set org.gnome.desktop.interface icon-theme Papirus-Dark")
+	hl.exec_cmd("gsettings set org.gnome.desktop.interface icon-theme Adwaita")
 end)
 
 local function bind(modifier, key, cmd)

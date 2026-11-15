@@ -1,6 +1,6 @@
 # arch-mbp
 
-Arch Linux on a 2015 15" retina MacBook Pro (MacBookPro11,x): Hyprland with a Catppuccin look, tuned for efficiency.
+Arch Linux on a 2015 15" retina MacBook Pro (MacBookPro11,x): Hyprland in black and white, tuned for efficiency.
 
 The look and Waybar/rofi/kitty/dunst styling are adapted from [ad1822/hyprdots](https://github.com/ad1822/hyprdots) (MIT, licence in `LICENSE-hyprdots`). The first iteration was based on [Ruixi-rebirth/sway-dotfiles](https://github.com/Ruixi-rebirth/sway-dotfiles) (GPL-3.0, so this repo is GPL-3.0 too).
 
@@ -12,8 +12,8 @@ The look and Waybar/rofi/kitty/dunst styling are adapted from [ad1822/hyprdots](
 | `install/02-chroot.sh` | Inside the chroot: locale, user, systemd-boot, Wi-Fi driver choice |
 | `install/03-post.sh` | After first boot: packages, AUR, services, power tuning, stow dotfiles |
 | `stow/common/` | Shared stow package: Hyprland config (Lua), Waybar, kitty, rofi, dunst, fish, starship |
-| `stow/theme-catppuccin/` | Catppuccin Mocha look (default for the 2015 Pro) with pixel-art wallpapers |
-| `stow/theme-mono/` | Black and white look (default for the 2017 Air) with monochrome wallpapers |
+| `stow/theme-catppuccin/` | Catppuccin Mocha look (optional) with pixel-art wallpapers |
+| `stow/theme-mono/` | Black and white look (default for both Macs) with monochrome wallpapers |
 | `system/etc/` | tlp, zram, sysctl, journald, modprobe settings |
 
 ## Install
@@ -53,7 +53,7 @@ The black and white theme (`stow/theme-mono/`) has six monochrome wallpapers fro
 
 ## Machines and themes
 
-The installer reads the Mac model from DMI and picks defaults: `MacBookAir*` gets host `archbook-air`, theme `mono`, scale 1 (1440x900, not Retina). Anything else (the 2015 Pro) gets host `archbook-pro`, theme `catppuccin`, scale 2. Override with `HOSTNAME_`, `THEME` (`catppuccin` or `mono`) and `SCALE` before the command. The scale lives in a generated `~/.config/hypr/host.lua`, the look in the stowed `~/.config/hypr/theme.lua`.
+The installer reads the Mac model from DMI and picks defaults: `MacBookAir*` gets host `archbook-air`, theme `mono`, scale 1 (1440x900, not Retina). Anything else (the 2015 Pro) gets host `archbook-pro`, theme `mono` (also `catppuccin`), scale 2. Override with `HOSTNAME_`, `THEME` (`catppuccin` or `mono`) and `SCALE` before the command. The scale lives in a generated `~/.config/hypr/host.lua`, the look in the stowed `~/.config/hypr/theme.lua`.
 
 To add a theme, copy a `stow/theme-*` folder, change the colours, and set `THEME=yourname`.
 
