@@ -57,7 +57,7 @@ To add a theme, copy a `stow/theme-*` folder, change the colours, and set `THEME
 
 ## Keys
 
-Mod is the Option (Alt) key. Command and Control are swapped, so Cmd+C/V/T/W work like macOS in apps (Cmd+Shift+C/V in the terminal). `Super+Return` terminal, `Super+d` launcher, `Super+Shift+q` close, `Super+Escape` lock, `Super+Shift+e` power menu, `Super+1..9` workspaces, `Super+r` resize mode. Full list in `stow/common/.config/sway/config`.
+Mod is the Option (Alt) key. Command and Control are swapped, so Cmd+C/V/T/W work like macOS in apps (Cmd+Shift+C/V in the terminal). `Option+Return` terminal, `Option+d` launcher, `Option+Shift+q` close, `Option+Escape` lock, `Option+Shift+e` power menu, `Option+1..9` workspaces, `Option+r` resize mode. Full list in `stow/common/.config/sway/config`.
 
 ## Efficiency choices
 
