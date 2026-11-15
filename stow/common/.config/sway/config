@@ -1,7 +1,8 @@
 # sway config: Gruvbox retro, tuned for efficiency on a 2015 retina MacBook Pro.
 # Structure adapted from Ruixi-rebirth/sway-dotfiles (GPL-3.0).
 
-set $mod Mod1   # Option (Alt). Cmd and Ctrl are swapped below so Cmd+C/V/T work like macOS
+# Option (Alt) is the mod key. Cmd and Ctrl are swapped in the input block below so Cmd+C/V/T work like macOS.
+set $mod Mod1
 set $left h
 set $down j
 set $up k
