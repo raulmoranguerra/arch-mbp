@@ -49,7 +49,9 @@ sudo install -Dm644 "$REPO/system/etc/sysctl.d/99-zram.conf"                  /e
 sudo install -Dm644 "$REPO/system/etc/systemd/journald.conf.d/size.conf"      /etc/systemd/journald.conf.d/size.conf
 sudo systemctl daemon-reload
 sudo systemctl mask systemd-rfkill.service systemd-rfkill.socket
-sudo systemctl enable --now tlp thermald earlyoom
+sudo systemctl enable tlp thermald earlyoom
+# Start without waiting: one of these can block for a long time, and they all start on the next boot anyway.
+for s in tlp thermald earlyoom; do sudo systemctl start --no-block "$s" || true; done
 sudo systemctl enable mbpfan 2>/dev/null || sudo systemctl enable mbpfan.service || true
 sudo systemctl start systemd-zram-setup@zram0.service || true
 sudo sysctl --system >/dev/null
