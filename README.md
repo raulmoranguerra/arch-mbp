@@ -61,6 +61,10 @@ To add a theme, copy a `stow/theme-*` folder, change the colours, and set `THEME
 
 Mod is the Option (Alt) key. Command and Control are swapped, so Cmd+C/V/T/W work like macOS in apps (Cmd+Shift+C/V in the terminal). `Option+Return` terminal (kitty), `Option+d` launcher (rofi), `Option+Shift+q` close, `Option+Escape` log out to the tuigreet login, `Option+Shift+e` power menu, `Option+1..9` workspaces, `Option+=`/`Option+-` resize column, `Option+Tab` previous workspace. Full list in `stow/common/.config/hypr/hyprland.lua`.
 
+## Battery notes
+
+Measured on the 2015 Pro: about 13 W with the screen on at 10% brightness, 17 to 18 W at 65%, and 7 W with the screen off. The panel has no self-refresh, so the CPU package cannot sleep deeply while the screen is lit; brightness and screen-off time are the levers that matter. The screen dims after 2 minutes idle, turns off at 5 and the laptop suspends at 10. The boot entry uses `acpi_osi=!Darwin`, which lets the firmware power down Thunderbolt (about 0.7 W); plug Thunderbolt devices in before power-on, or remove that option.
+
 ## Efficiency choices
 
 No display manager, no animations or blur, integer HiDPI scale 2, one static wallpaper (no wallpaper daemon), zram instead of swap, tlp with battery-first settings, Waybar polling at 5 to 30 second intervals, text labels instead of icon fonts.

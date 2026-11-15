@@ -35,12 +35,14 @@ default arch.conf
 timeout 2
 editor no
 EOF
+# acpi_osi=!Darwin: the firmware powers the Thunderbolt controller down when nothing is plugged in at boot
+# (about 0.7 W). Thunderbolt devices must then be connected before power-on.
 cat > /boot/loader/entries/arch.conf <<EOF
 title   Arch Linux
 linux   /vmlinuz-linux
 initrd  /intel-ucode.img
 initrd  /initramfs-linux.img
-options root=PARTUUID=$PARTUUID rw quiet nowatchdog
+options root=PARTUUID=$PARTUUID rw quiet nowatchdog acpi_osi=!Darwin
 EOF
 
 useradd -m -G wheel -s /bin/bash "$USERNAME_"
