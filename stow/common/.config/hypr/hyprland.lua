@@ -77,6 +77,9 @@ bind(mods, "C", "hyprctl reload")
 -- Windows
 hl.bind(mods .. " + Q", hl.dsp.window.close())
 hl.bind(mod .. " + F", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }))
+-- Minimize: send the window to a hidden workspace; Option+M shows that workspace to get it back.
+hl.bind(mod .. " + N", hl.dsp.window.move({ workspace = "special:minimized", follow = false }))
+hl.bind(mod .. " + M", hl.dsp.workspace.toggle_special("minimized"))
 hl.bind(mods .. " + space", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mod .. " + equal", hl.dsp.layout("colresize +0.1"))
 hl.bind(mod .. " + minus", hl.dsp.layout("colresize -0.1"))
@@ -133,3 +136,35 @@ hl.bind("XF86KbdBrightnessDown", hl.dsp.exec_cmd(home .. "/.local/bin/osd-bright
 hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("swayosd-client --playerctl play-pause"))
 hl.bind("XF86AudioNext", hl.dsp.exec_cmd("swayosd-client --playerctl next"))
 hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("swayosd-client --playerctl prev"))
+
+-- Title bars with close and minimize buttons, for mouse use (hyprbars plugin; skipped if not installed).
+-- The plugin must match the Hyprland version: rebuild it after a Hyprland update.
+local bars_lib = "/usr/lib/libhyprbars.so"
+local bars_file = io.open(bars_lib)
+if bars_file then
+	bars_file:close()
+	local t = bar_theme or { bar = "rgb(0a0a0a)", text = "rgb(ffffff)", close = "rgb(ffffff)", min = "rgb(8a8a8a)", icon = "rgb(0a0a0a)" }
+	if not hl.plugin.hyprbars then
+		pcall(hl.plugin.load, bars_lib)
+	end
+	if hl.plugin.hyprbars then
+		hl.config({
+			plugin = {
+				hyprbars = {
+					bar_height = 22,
+					bar_color = t.bar,
+					["col.text"] = t.text,
+					bar_text_size = 10,
+					bar_text_font = "Inter",
+					bar_buttons_alignment = "left",
+					bar_padding = 8,
+					bar_button_padding = 7,
+					bar_part_of_window = true,
+					bar_precedence_over_border = true,
+				},
+			},
+		})
+		hl.plugin.hyprbars.add_button({ bg_color = t.close, fg_color = t.icon, size = 13, icon = "x", action = "hyprctl dispatch 'hl.dsp.window.close()'" })
+		hl.plugin.hyprbars.add_button({ bg_color = t.min, fg_color = t.icon, size = 13, icon = "-", action = "hyprctl dispatch 'hl.dsp.window.move({ workspace = \"special:minimized\", follow = false })'" })
+	end
+end

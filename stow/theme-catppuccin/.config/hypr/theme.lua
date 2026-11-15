@@ -15,3 +15,6 @@ hl.config({
 		shadow = { enabled = false },
 	},
 })
+
+-- Title bar colours (used by hyprland.lua when the hyprbars plugin is installed)
+bar_theme = { bar = "rgb(181825)", text = "rgb(cdd6f4)", close = "rgb(f38ba8)", min = "rgb(f9e2af)", icon = "rgb(11111b)" }

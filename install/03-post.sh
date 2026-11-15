@@ -38,6 +38,11 @@ if ! command -v paru >/dev/null; then
   rm -rf "$tmp"
 fi
 
+# Title bars with close and minimize buttons (optional: the desktop works without it).
+# The plugin is built for one exact Hyprland version, so it can lag behind after an update.
+paru -S --needed --noconfirm hyprland-plugin-hyprbars || \
+  echo "WARNING: hyprbars plugin failed to build. Windows will have no title bar buttons."
+
 # Fans: left to the Mac's own controller. mbpfan no longer works on current kernels (applesmc dropped fan*_output).
 if [ "${INSTALL_CAMERA:-0}" = "1" ]; then
   paru -S --needed --noconfirm facetimehd-dkms facetimehd-firmware || \
