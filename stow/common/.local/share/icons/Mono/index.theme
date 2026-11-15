@@ -1,0 +1,12 @@
+[Icon Theme]
+Name=Mono
+Comment=White line icons for the dock, falls back to Tela black
+Inherits=Tela-circle-black-dark,Adwaita,hicolor
+Directories=scalable/apps
+
+[scalable/apps]
+Size=48
+MinSize=16
+MaxSize=512
+Type=Scalable
+Context=Applications
