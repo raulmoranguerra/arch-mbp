@@ -18,6 +18,8 @@ export INSTALL_CAMERA="${INSTALL_CAMERA:-0}"
 TARBALL_URL="https://github.com/raulmoranguerra/arch-mbp/archive/refs/heads/master.tar.gz"
 
 [ -d /sys/firmware/efi ] || { echo "Not booted in UEFI mode"; exit 1; }
+# Make the live ISO keyboard match the installed one, so the password typed here is the one typed later.
+loadkeys "$KB_LAYOUT" 2>/dev/null || echo "Could not load keymap $KB_LAYOUT; passwords with symbols may differ after install."
 ping -c1 -W3 archlinux.org >/dev/null || { echo "No network. Plug in ethernet or tether a phone by USB."; exit 1; }
 
 # Target disk: the one internal, non-removable, non-USB disk

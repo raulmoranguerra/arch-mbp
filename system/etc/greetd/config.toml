@@ -2,5 +2,5 @@
 vt = 1
 
 [default_session]
-command = "tuigreet --time --remember --asterisks --cmd /usr/local/bin/sway-session"
+command = "tuigreet --time --remember --asterisks --cmd /usr/local/bin/wm-session"
 user = "greeter"

@@ -1,0 +1,8 @@
+#!/bin/sh
+# shot = region to clipboard, shot save = region to ~/Pictures
+region=$(slurp) || exit 0
+if [ "$1" = save ]; then
+  grim -g "$region" "$HOME/Pictures/shot-$(date +%Y%m%d-%H%M%S).png"
+else
+  grim -g "$region" - | wl-copy
+fi
