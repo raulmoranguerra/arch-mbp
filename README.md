@@ -59,7 +59,7 @@ To add a theme, copy a `stow/theme-*` folder, change the colours, and set `THEME
 
 ## Keys
 
-Mod is the Option (Alt) key. Command and Control are swapped, so Cmd+C/V/T/W work like macOS in apps (Cmd+Shift+C/V in the terminal). `Option+Return` terminal (kitty), `Option+d` launcher (rofi), `Option+Shift+q` close, `Option+Escape` lock, `Option+Shift+e` power menu, `Option+1..9` workspaces, `Option+=`/`Option+-` resize column, `Option+Tab` previous workspace. Full list in `stow/common/.config/hypr/hyprland.lua`.
+Mod is the Option (Alt) key. Command and Control are swapped, so Cmd+C/V/T/W work like macOS in apps (Cmd+Shift+C/V in the terminal). `Option+Return` terminal (kitty), `Option+d` launcher (rofi), `Option+Shift+q` close, `Option+Escape` log out to the tuigreet login, `Option+Shift+e` power menu, `Option+1..9` workspaces, `Option+=`/`Option+-` resize column, `Option+Tab` previous workspace. Full list in `stow/common/.config/hypr/hyprland.lua`.
 
 ## Efficiency choices
 

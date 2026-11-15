@@ -69,7 +69,7 @@ bind(mod, "Return", term)
 bind(mod, "D", menu)
 bind(mod, "B", "firefox")
 bind(mod, "E", term .. " -e yazi")
-bind(mod, "Escape", "loginctl lock-session")
+bind(mod, "Escape", "hyprctl dispatch exit")
 bind(mods, "E", home .. "/.config/rofi/powermenu.sh")
 bind(mods, "C", "hyprctl reload")
 
