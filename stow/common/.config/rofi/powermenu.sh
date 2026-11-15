@@ -8,7 +8,7 @@ case "$choice" in
 esac
 [ "$(printf 'Yes\nNo\n' | rofi -dmenu -p "$choice?" -mesg "Are you sure?" -theme "$theme")" = "Yes" ] || exit 0
 case "$choice" in
-  Logout)   hyprctl dispatch exit ;;
+  Logout)   hyprctl dispatch 'hl.dsp.exit()' ;;
   Reboot)   systemctl reboot ;;
   Shutdown) systemctl poweroff ;;
 esac
