@@ -39,7 +39,7 @@ During first boot the user has passwordless sudo, removed again when the service
 
 ## Things to verify on the real machine
 
-- The AUR package name `mbpfan-git` can drift. The Hyprland config is Lua for Hyprland 0.57, so some option names may need adjusting on the real machine (check `hyprctl configerrors`).
+- Fans are left to the Mac's own controller (`mbpfan` fails on current kernels, which dropped `fan*_output`). Check with `cat /sys/class/hwmon/hwmon*/fan*_input`. The Hyprland config is Lua for Hyprland 0.57, so some option names may need adjusting on the real machine (check `hyprctl configerrors`).
 - Wi-Fi: the script picks `broadcom-wl-dkms` only if the chip is a BCM4360 (`14e4:43a0`), otherwise the in-kernel `brcmfmac`.
 - 11,5 models with the AMD GPU: check it powers down with `sudo powertop` or `cat /sys/kernel/debug/vgaswitcheroo/switch`.
 - Waybar CPU temperature path assumes `coretemp` (Intel). Check `ls /sys/devices/platform/coretemp.0/hwmon`.

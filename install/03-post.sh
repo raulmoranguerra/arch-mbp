@@ -38,10 +38,11 @@ if ! command -v paru >/dev/null; then
   rm -rf "$tmp"
 fi
 
-AUR=(mbpfan-git)
-[ "${INSTALL_CAMERA:-0}" = "1" ] && AUR+=(facetimehd-dkms facetimehd-firmware)
-paru -S --needed --noconfirm "${AUR[@]}" || \
-  echo "WARNING: some AUR packages failed. Check names with: paru -Ss mbpfan"
+# Fans: left to the Mac's own controller. mbpfan no longer works on current kernels (applesmc dropped fan*_output).
+if [ "${INSTALL_CAMERA:-0}" = "1" ]; then
+  paru -S --needed --noconfirm facetimehd-dkms facetimehd-firmware || \
+    echo "WARNING: camera packages failed to install."
+fi
 
 # System tuning
 sudo install -Dm644 "$REPO/system/etc/tlp.d/10-mbp.conf"                      /etc/tlp.d/10-mbp.conf
@@ -61,7 +62,6 @@ sudo systemctl enable sshd avahi-daemon
 sudo systemctl enable greetd   # TUI login (tuigreet) on tty1, replaces getty@tty1
 # Start without waiting: one of these can block for a long time, and they all start on the next boot anyway.
 for s in tlp thermald earlyoom; do sudo systemctl start --no-block "$s" || true; done
-sudo systemctl enable mbpfan 2>/dev/null || sudo systemctl enable mbpfan.service || true
 sudo systemctl start --no-block systemd-zram-setup@zram0.service || true
 sudo sysctl --system >/dev/null
 
