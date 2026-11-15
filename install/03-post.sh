@@ -17,7 +17,7 @@ SCALE="${SCALE:-$DEFAULT_SCALE}"
 echo "Model: $PRODUCT  Theme: $THEME  Scale: $SCALE"
 
 PKGS=(
-  hyprland hypridle hyprpaper waybar nwg-dock-hyprland kitty rofi dunst
+  hyprland swayosd hypridle hyprpaper waybar nwg-dock-hyprland kitty rofi dunst
   fish zoxide yazi
   grim slurp wl-clipboard brightnessctl playerctl
   pipewire pipewire-pulse pipewire-alsa wireplumber
