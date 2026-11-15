@@ -48,7 +48,7 @@ cp -r "$REPO_DIR" /mnt/root/arch-mbp
 arch-chroot /mnt env HOSTNAME_="$HOSTNAME_" USERNAME_="$USERNAME_" \
   TZ_NAME="${TZ_NAME:-UTC}" ROOT_PART="${P}2" \
   USER_PASS="${USER_PASS:-}" WIFI_SSID="${WIFI_SSID:-}" WIFI_PSK="${WIFI_PSK:-}" \
-  INSTALL_CAMERA="${INSTALL_CAMERA:-0}" \
+  INSTALL_CAMERA="${INSTALL_CAMERA:-0}" THEME="${THEME:-}" \
   /root/arch-mbp/install/02-chroot.sh
 
 echo

@@ -4,7 +4,13 @@
 # Asks everything up front, then installs, reboots, and finishes setup on first boot by itself.
 set -euo pipefail
 
-export HOSTNAME_="${HOSTNAME_:-archbook-pro}"
+PRODUCT="$(cat /sys/class/dmi/id/product_name 2>/dev/null || echo unknown)"
+case "$PRODUCT" in
+  MacBookAir*) D_HOST=archbook-air; D_THEME=mono ;;
+  *)           D_HOST=archbook-pro; D_THEME=gruvbox ;;
+esac
+export HOSTNAME_="${HOSTNAME_:-$D_HOST}"
+export THEME="${THEME:-$D_THEME}"
 export USERNAME_="${USERNAME_:-rmg}"
 export TZ_NAME="${TZ_NAME:-Europe/Madrid}"
 export INSTALL_CAMERA="${INSTALL_CAMERA:-0}"
@@ -27,7 +33,7 @@ fi
 echo
 lsblk -po NAME,SIZE,MODEL,FSTYPE "$DISK"
 echo
-echo "Host: $HOSTNAME_   User: $USERNAME_   Timezone: $TZ_NAME   Disk: $DISK"
+echo "Model: $PRODUCT   Host: $HOSTNAME_   User: $USERNAME_   Theme: $THEME   Timezone: $TZ_NAME   Disk: $DISK"
 read -r -p "Type 'erase' to wipe $DISK and install: " ok
 [ "$ok" = "erase" ] || { echo "Aborted."; exit 1; }
 

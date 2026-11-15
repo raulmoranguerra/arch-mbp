@@ -11,7 +11,9 @@ Sway, Waybar and mako structure adapted from [Ruixi-rebirth/sway-dotfiles](https
 | `install/01-live-iso.sh` | From the live ISO: partition, format, pacstrap, then run step 2 |
 | `install/02-chroot.sh` | Inside the chroot: locale, user, systemd-boot, Wi-Fi driver choice |
 | `install/03-post.sh` | After first boot: packages, AUR, services, power tuning, stow dotfiles |
-| `dotfiles/` | Stow package: sway, waybar, foot, fuzzel, mako, swaylock, bash |
+| `stow/common/` | Shared stow package: sway keybinds, Waybar layout, bash, power menu |
+| `stow/theme-gruvbox/` | Retro Gruvbox look (default for the 2015 Pro) with pixel-art wallpapers |
+| `stow/theme-mono/` | Black and white look (default for the 2017 Air) with monochrome wallpapers |
 | `system/etc/` | tlp, zram, sysctl, journald, modprobe settings |
 
 ## Install
@@ -43,11 +45,19 @@ During first boot the user has passwordless sudo, removed again when the service
 
 ## Wallpapers
 
-`dotfiles/.config/wallpapers/` has sixteen wallpapers (mostly pixel art) (`ruins.png` is the default; others: `castle`, `pacman`, `fortress-sunset`, `glowing-tree`, `city-dusk`, `iso-city`, `night-moons`, `moonlit-bridge`, `sepia-street`, `bamboo-moon`, `castle-hike`, plus cyberpunk-style `neon-diamond`, `neon-shibuya`, `retro-car`, `vaporwave`) taken from the MIT-licensed [frenzyexists/wallpapers](https://github.com/frenzyexists/wallpapers) collection (licence text alongside). The individual artists are not credited in that repo. To switch, edit the `output * bg` line in the sway config.
+`stow/theme-gruvbox/.config/wallpapers/` has sixteen wallpapers (mostly pixel art) (`ruins.png` is the default; others: `castle`, `pacman`, `fortress-sunset`, `glowing-tree`, `city-dusk`, `iso-city`, `night-moons`, `moonlit-bridge`, `sepia-street`, `bamboo-moon`, `castle-hike`, plus cyberpunk-style `neon-diamond`, `neon-shibuya`, `retro-car`, `vaporwave`) taken from the MIT-licensed [frenzyexists/wallpapers](https://github.com/frenzyexists/wallpapers) collection (licence text alongside). The individual artists are not credited in that repo. To switch, edit the `output * bg` line in `~/.config/sway/theme.conf`.
+
+The black and white theme (`stow/theme-mono/`) has six monochrome wallpapers from the same collection: `moon` (default), `stars-rocket`, `shuttle`, `night-station`, `storm-rail`, `mountain`.
+
+## Machines and themes
+
+The installer reads the Mac model from DMI and picks defaults: `MacBookAir*` gets host `archbook-air`, theme `mono`, sway scale 1 (1440x900, not Retina). Anything else (the 2015 Pro) gets host `archbook-pro`, theme `gruvbox`, scale 2. Override with `HOSTNAME_`, `THEME` (`gruvbox` or `mono`) and `SCALE` before the command. The scale lives in a generated `~/.config/sway/host.conf`, the look in the stowed `~/.config/sway/theme.conf`.
+
+To add a theme, copy a `stow/theme-*` folder, change the colours, and set `THEME=yourname`.
 
 ## Keys
 
-Super is the Command key. `Super+Return` terminal, `Super+d` launcher, `Super+Shift+q` close, `Super+Escape` lock, `Super+Shift+e` power menu, `Super+1..9` workspaces, `Super+r` resize mode. Full list in `dotfiles/.config/sway/config`.
+Super is the Command key. `Super+Return` terminal, `Super+d` launcher, `Super+Shift+q` close, `Super+Escape` lock, `Super+Shift+e` power menu, `Super+1..9` workspaces, `Super+r` resize mode. Full list in `stow/common/.config/sway/config`.
 
 ## Efficiency choices
 

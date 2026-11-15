@@ -87,7 +87,7 @@ fi
 
 # First-boot automation: run 03-post.sh once after the first boot, then reboot.
 if [ -n "${USER_PASS:-}" ]; then
-  echo "INSTALL_CAMERA=${INSTALL_CAMERA:-0}" > /var/lib/arch-mbp-firstboot
+  { echo "INSTALL_CAMERA=${INSTALL_CAMERA:-0}"; [ -n "${THEME:-}" ] && echo "THEME=$THEME"; true; } > /var/lib/arch-mbp-firstboot
   echo "$USERNAME_ ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/99-firstboot
   chmod 440 /etc/sudoers.d/99-firstboot
   sed "s/__USER__/$USERNAME_/g" "$SRC/system/etc/systemd/system/arch-mbp-firstboot.service" \
