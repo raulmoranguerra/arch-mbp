@@ -1,0 +1,55 @@
+#!/usr/bin/env python3
+"""Build a greyscale copy of the Papirus icons in ~/.local/share/icons/Mono.
+
+Papirus icons are flat SVGs, so every colour is rewritten to its grey of the same
+brightness. Symlinks are kept as symlinks. Safe to run again after a Papirus update.
+"""
+import os, re, sys
+
+SRC = "/usr/share/icons/Papirus/64x64"
+DST = os.path.expanduser("~/.local/share/icons/Mono/scalable")
+CONTEXTS = ["apps", "places", "devices", "mimetypes", "categories"]
+# Names some apps ask for that Papirus lacks: reuse a fitting icon.
+ALIASES = {"apps/yazi.svg": "apps/system-file-manager.svg", "apps/launcher.svg": "apps/applications-all.svg"}
+
+PROP = re.compile(r'((?:fill|stroke|stop-color|flood-color|color)\s*[:=]\s*"?\s*)#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})\b')
+
+def grey(m):
+    h = m.group(2)
+    if len(h) == 3:
+        h = "".join(c * 2 for c in h)
+    r, g, b = (int(h[i:i + 2], 16) for i in (0, 2, 4))
+    y = round(0.299 * r + 0.587 * g + 0.114 * b)
+    return f"{m.group(1)}#{y:02x}{y:02x}{y:02x}"
+
+def main():
+    if not os.path.isdir(SRC):
+        sys.exit(f"Papirus not found at {SRC}")
+    made = 0
+    for ctx in CONTEXTS:
+        src, dst = os.path.join(SRC, ctx), os.path.join(DST, ctx)
+        if not os.path.isdir(src):
+            continue
+        os.makedirs(dst, exist_ok=True)
+        for name in os.listdir(src):
+            if not name.endswith(".svg"):
+                continue
+            s, d = os.path.join(src, name), os.path.join(dst, name)
+            if os.path.lexists(d):
+                os.remove(d)
+            if os.path.islink(s):
+                os.symlink(os.readlink(s), d)
+            else:
+                with open(s, encoding="utf-8", errors="replace") as f:
+                    data = f.read()
+                with open(d, "w", encoding="utf-8") as f:
+                    f.write(PROP.sub(grey, data))
+            made += 1
+    for alias, target in ALIASES.items():
+        a, t = os.path.join(DST, alias), os.path.join(DST, target)
+        if os.path.exists(t) and not os.path.lexists(a):
+            os.symlink(os.path.basename(target), a)
+    print(f"Mono icons: {made} written to {DST}")
+
+if __name__ == "__main__":
+    main()

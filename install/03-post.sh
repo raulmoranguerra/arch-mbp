@@ -23,7 +23,7 @@ PKGS=(
   pipewire pipewire-pulse pipewire-alsa wireplumber
   xdg-desktop-portal-wlr xdg-desktop-portal-gtk polkit xorg-xwayland
   mesa libva-intel-driver libva-utils
-  ttf-iosevka-nerd inter-font ttf-jetbrains-mono-nerd noto-fonts noto-fonts-emoji adwaita-icon-theme tela-circle-icon-theme-black
+  ttf-iosevka-nerd inter-font ttf-jetbrains-mono-nerd noto-fonts noto-fonts-emoji adwaita-icon-theme papirus-icon-theme
   tlp thermald zram-generator earlyoom greetd greetd-tuigreet
   openssh avahi nss-mdns
   stow starship fastfetch btop neovim bash-completion man-db firefox mpv
@@ -81,7 +81,9 @@ stow --no-folding -d "$REPO/stow" -t "$HOME" common "theme-$THEME"
 # Dock pins (the dock rewrites this file when you pin or unpin)
 mkdir -p "$HOME/.cache"
 [ -e "$HOME/.cache/nwg-dock-pinned" ] || printf 'kitty\nfirefox\nyazi\n' > "$HOME/.cache/nwg-dock-pinned"
-chmod +x "$HOME/.local/bin/shot" "$HOME/.local/bin/osd-brightness" "$HOME/.config/rofi/"*.sh || true
+chmod +x "$HOME/.local/bin/shot" "$HOME/.local/bin/osd-brightness" "$HOME/.local/bin/make-mono-icons" "$HOME/.config/rofi/"*.sh || true
+# Greyscale copy of the Papirus icons (the Mono icon theme)
+"$HOME/.local/bin/make-mono-icons" || true
 # Fish as the login shell (greeting, starship prompt, zoxide)
 sudo usermod -s /usr/bin/fish "$USER" || true
 

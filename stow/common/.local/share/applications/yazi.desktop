@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Files
+Comment=Yazi file manager, opened in a terminal window
+Icon=yazi
+Exec=kitty -e yazi %f
+Terminal=false
+Type=Application
+Categories=System;FileManager;
+MimeType=inode/directory;
