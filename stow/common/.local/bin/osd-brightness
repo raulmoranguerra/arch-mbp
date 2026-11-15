@@ -1,0 +1,11 @@
+#!/bin/sh
+# osd-brightness up|down [kbd]: change brightness with brightnessctl (works through the login session),
+# then show the swayosd slider with the real value.
+dir="$1"; dev=""; step=5; icon=display-brightness-symbolic; floor=5
+if [ "$2" = "kbd" ]; then dev="-d smc::kbd_backlight"; step=10; icon=keyboard-brightness-symbolic; floor=0; fi
+if [ "$dir" = "up" ]; then arg="+${step}%"; else arg="${step}%-"; fi
+# shellcheck disable=SC2086
+brightnessctl $dev -n$floor set "$arg" >/dev/null 2>&1
+# shellcheck disable=SC2086
+pct=$(brightnessctl $dev -m | cut -d, -f4 | tr -d %)
+swayosd-client --custom-icon "$icon" --custom-progress "$(awk "BEGIN{printf \"%.2f\", $pct/100}")" --custom-progress-text "${pct}%"
